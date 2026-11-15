@@ -89,8 +89,11 @@
   .feature.new { border-color: rgba(79, 141, 255, .45); background: linear-gradient(160deg, #16223f, var(--card) 60%); }
   .more { text-align: center; margin-top: 22px; }
   .btn.coffee { background: #ffdd00; border-color: #ffdd00; color: #1a1205; }
+  .btn.discord { background: #5865F2; border-color: #5865F2; color: #fff; }
   header.top nav a.donate { color: #1a1205; background: #ffdd00; padding: 2px 12px; border-radius: 999px; font-weight: 700; }
   header.top nav a.donate:hover { color: #1a1205; filter: brightness(1.08); }
+  header.top nav a.discord { color: #fff; background: #5865F2; padding: 2px 12px; border-radius: 999px; font-weight: 700; }
+  header.top nav a.discord:hover { color: #fff; filter: brightness(1.1); }
   .support { background: linear-gradient(135deg, #2a2208, #0e1018 70%); border: 1px solid rgba(255, 221, 0, .35);
     border-radius: var(--radius); padding: 32px; text-align: center; }
   .support h2 { margin-top: 0; }
@@ -129,6 +132,7 @@
       <a href="#screenshots">Screenshots</a>
       <a href="app/">Web version</a>
       <a href="https://github.com/sherazi5110/stream-goat">GitHub</a>
+      <a class="discord" href="https://discord.gg/PUmEQzJSa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M20.32 4.37A19.8 19.8 0 0 0 15.36 2.8a13.6 13.6 0 0 0-.63 1.3 18.4 18.4 0 0 0-5.47 0 13 13 0 0 0-.64-1.3 19.7 19.7 0 0 0-4.96 1.57C.53 9.08-.32 13.66.1 18.18a19.9 19.9 0 0 0 6.07 3.08c.49-.67.93-1.38 1.3-2.12a12.9 12.9 0 0 1-2.05-.99l.5-.39a14.2 14.2 0 0 0 12.16 0l.5.39c-.65.39-1.34.72-2.05.99.37.74.81 1.45 1.3 2.12a19.8 19.8 0 0 0 6.07-3.08c.5-5.24-.84-9.78-3.58-13.81ZM8.02 15.4c-1.18 0-2.16-1.09-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.1 2.16 2.42c0 1.33-.95 2.42-2.16 2.42Zm7.96 0c-1.18 0-2.16-1.09-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.1 2.16 2.42c0 1.33-.94 2.42-2.16 2.42Z"/></svg> Discord</a>
       <a class="donate" href="https://buymeacoffee.com/syedalihamza" target="_blank" rel="noopener">☕ Donate</a>
     </nav>
   </div>
@@ -275,7 +279,11 @@
       <h2>Support Stream Goat</h2>
       <p class="sub" style="margin-bottom:20px">Stream Goat is free, with no ads and no tracking, and made in my spare time.
         If you enjoy it, a coffee helps keep the updates coming. Thank you! 🐐</p>
-      <a class="btn coffee" href="https://buymeacoffee.com/syedalihamza" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+      <div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap">
+        <a class="btn coffee" href="https://buymeacoffee.com/syedalihamza" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+        <a class="btn discord" href="https://discord.gg/PUmEQzJSa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M20.32 4.37A19.8 19.8 0 0 0 15.36 2.8a13.6 13.6 0 0 0-.63 1.3 18.4 18.4 0 0 0-5.47 0 13 13 0 0 0-.64-1.3 19.7 19.7 0 0 0-4.96 1.57C.53 9.08-.32 13.66.1 18.18a19.9 19.9 0 0 0 6.07 3.08c.49-.67.93-1.38 1.3-2.12a12.9 12.9 0 0 1-2.05-.99l.5-.39a14.2 14.2 0 0 0 12.16 0l.5.39c-.65.39-1.34.72-2.05.99.37.74.81 1.45 1.3 2.12a19.8 19.8 0 0 0 6.07-3.08c.5-5.24-.84-9.78-3.58-13.81ZM8.02 15.4c-1.18 0-2.16-1.09-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.1 2.16 2.42c0 1.33-.95 2.42-2.16 2.42Zm7.96 0c-1.18 0-2.16-1.09-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.1 2.16 2.42c0 1.33-.94 2.42-2.16 2.42Z"/></svg> Join the Discord</a>
+      </div>
+      <p class="sub" style="margin-top:18px">Questions, ideas or something not working? Come and chat on Discord.</p>
     </div>
   </div>
 </section>
@@ -286,7 +294,7 @@
     <b>Stream Goat</b>, created by <b>Syed Ali Hamza</b>.<br>
     Free software under GPL-3.0 · <a href="https://github.com/sherazi5110/stream-goat">Source code on GitHub</a><br>
     Stream Goat doesn't host any content: what you watch comes from the extensions and add-ons you choose to install.<br>
-    <a href="privacy.html">Privacy policy</a> · <a href="https://buymeacoffee.com/syedalihamza" target="_blank" rel="noopener">Buy me a coffee</a>
+    <a href="privacy.html">Privacy policy</a> · <a href="https://buymeacoffee.com/syedalihamza" target="_blank" rel="noopener">Buy me a coffee</a> · <a href="https://discord.gg/PUmEQzJSa" target="_blank" rel="noopener">Discord</a>
   </div>
 </footer>
 

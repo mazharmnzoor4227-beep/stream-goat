@@ -5,6 +5,8 @@
 <p align="center"><b>Movies, series, anime and Live TV on Windows, Linux, Android phones and Android TV.</b><br>
 Created by <b>Syed Ali Hamza</b></p>
 
+<p align="center"><a href="https://discord.gg/PUmEQzJSa"><img src="https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the Stream Goat Discord"></a></p>
+
 ![Stream Goat's start animation: the goat chewing its grass under an arc of stars](docs/screenshots/intro.png)
 
 Stream Goat runs **CloudStream extensions and Stremio add-ons**, from the same repositories the official CloudStream
@@ -17,7 +19,7 @@ library and downloads carry over.)*
 > **[report it / create an issue](https://github.com/sherazi5110/stream-goat/issues/new)**. In the app you can also use
 > *Settings → About → Report a problem*, which fills in your version and device for you.
 
-**[Website](https://sherazi5110.github.io/stream-goat/)** · **[Download](https://github.com/sherazi5110/stream-goat/releases/latest)** · **[Open the web version](https://sherazi5110.github.io/stream-goat/app/)** (any phone or browser, Stremio add-ons) · **[Full install guide](INSTALL.md)** · **[Test Pre-released version](https://github.com/sherazi5110/stream-goat/releases/tag/test-build)**
+**[Website](https://sherazi5110.github.io/stream-goat/)** · **[Download](https://github.com/sherazi5110/stream-goat/releases/latest)** · **[Open the web version](https://sherazi5110.github.io/stream-goat/app/)** (any phone or browser, Stremio add-ons) · **[Full install guide](INSTALL.md)** · **[Discord](https://discord.gg/PUmEQzJSa)** · **[Test Pre-released version](https://github.com/sherazi5110/stream-goat/releases/tag/test-build)**
 
 ## Download for your device
 
@@ -339,6 +341,7 @@ The upstream versions are pinned in `scripts/fetch-upstream.sh` (`CS_COMMIT`, `N
 Stream Goat is free, with no ads and no tracking. If you enjoy it, you can support it here:
 
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-ffdd00?style=for-the-badge&labelColor=1a1205)](https://buymeacoffee.com/syedalihamza)
+[![Join the Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/PUmEQzJSa)
 
 ## License
 
