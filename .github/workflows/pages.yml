@@ -40,7 +40,7 @@ jobs:
             printf 'window.STREAMGOAT_CONFIG = { googleClientId: "%s" };\n' "$GOOGLE_WEB_CLIENT_ID" > _site/app/config.js
           fi
           cp packaging/linux/cloudstream-linux.svg _site/logo.svg
-          for f in home intro search-suggest player-translate player-picture livetv-guide profiles player-skip theme-glass about; do
+          for f in intro android-home android-livetv android-appearance android-profile-editor android-addons android-wetrakr android-library; do
             cp "docs/screenshots/$f.png" _site/screenshots/
           done
           ls -R _site | head -40
