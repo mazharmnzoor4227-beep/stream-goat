@@ -9,6 +9,8 @@ Created by <b>Syed Ali Hamza</b></p>
 
 ![Stream Goat's start animation: the goat chewing its grass under an arc of stars](docs/screenshots/intro.png)
 
+> **Testing notes (9.0.1).** The Mac and Linux apps are built and checked automatically but haven't been tested by hand yet, so please report anything odd. On Windows the first launch after installing can be slow and laggy for a minute while the app sets itself up and loads an earlier backup; give it a moment and it runs smoothly after that.
+
 > **Disclaimer.** Stream Goat is only a media player and organiser. It does not host, provide, link to or endorse any movies, shows, channels or other content, and it ships with no content sources. You add your own extensions, add-ons and playlists and are responsible for having the rights to whatever you play. Titles, posters and logos belong to their owners; in the screenshots below they are blurred.
 
 ## Android (phone, tablet, TV)
