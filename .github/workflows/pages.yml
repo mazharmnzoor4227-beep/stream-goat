@@ -6,7 +6,7 @@ name: Web app (GitHub Pages)
 on:
   push:
     branches: [main]
-    paths: ["site/**", "webapp/**", "docs/screenshots/**", "packaging/linux/cloudstream-linux.svg", ".github/workflows/pages.yml"]
+    paths: ["site/**", "webapp/**", "docs/screenshots/**", "docs/releases/**", "packaging/linux/cloudstream-linux.svg", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -43,6 +43,9 @@ jobs:
           for f in intro android-home android-livetv android-appearance android-profile-editor android-addons android-wetrakr android-library windows-home windows-downloads windows-appearance windows-livetv-sources; do
             cp "docs/screenshots/$f.png" _site/screenshots/
           done
+          mkdir -p _site/releases
+          cp docs/releases/*.md _site/releases/
+          python3 -c 'import glob,json,os; print(json.dumps([os.path.basename(f)[:-3] for f in glob.glob("docs/releases/*.md")]))' > _site/releases/index.json
           ls -R _site | head -40
       - uses: actions/upload-pages-artifact@v3
         with:

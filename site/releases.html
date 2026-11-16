@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Releases · Stream Goat</title>
+<meta name="description" content="Stream Goat: movies, series, anime and Live TV on Windows, Linux, Android, Android TV and in your browser. Runs CloudStream extensions and Stremio add-ons, with Google Drive backup. Created by Syed Ali Hamza.">
+<meta property="og:title" content="Stream Goat">
+<meta property="og:description" content="Movies, series, anime and Live TV on Windows, Linux, Android, Android TV and in your browser. Free and open source. New in 8.0.1: Google Drive backup.">
+<meta property="og:image" content="screenshots/intro.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="app/apple-touch-icon.png">
+<script>
+  // The web version used to live here: send its old links (…/#/home and so on) to its new place.
+  if (location.hash.startsWith("#/")) location.replace("app/" + location.hash);
+</script>
+<style>
+  :root {
+    --bg: #07080d; --bg2: #0e1018; --card: #141724; --line: #232838;
+    --text: #eef1f8; --muted: #9aa3b8; --accent: #4f8dff; --accent2: #8fb6ff;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent2); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+  header.top { position: sticky; top: 0; z-index: 10; background: rgba(7, 8, 13, .82);
+    backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; gap: 12px; height: 60px; }
+  header.top img { width: 34px; height: 34px; }
+  header.top b { font-size: 18px; letter-spacing: .2px; }
+  header.top nav { margin-left: auto; display: flex; gap: 18px; }
+  header.top nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+  header.top nav a:hover { color: var(--text); }
+
+  .hero { position: relative; overflow: hidden; text-align: center; padding: 64px 0 40px;
+    background: radial-gradient(ellipse at 50% 0%, #17305f 0%, transparent 60%); }
+  .hero h1 { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 0 0 12px; letter-spacing: -1px; }
+  .hero p.lead { font-size: clamp(17px, 2.4vw, 21px); color: var(--muted); max-width: 680px; margin: 0 auto 8px; }
+  .hero p.credit { color: var(--accent2); font-weight: 600; margin: 0 0 28px; }
+  .buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px;
+    font-weight: 600; text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--card); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn:hover { filter: brightness(1.12); }
+  .hero .shot { margin: 40px auto 0; max-width: 980px; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0, 0, 0, .6); }
+  .hero .shot img { display: block; width: 100%; height: auto; }
+
+  section { padding: 56px 0; scroll-margin-top: 60px; }
+  section h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px; text-align: center; }
+  section p.sub { color: var(--muted); text-align: center; margin: 0 auto 32px; max-width: 640px; }
+
+  .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .platform { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .platform.mine { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .platform h3 { margin: 0 0 4px; font-size: 21px; display: flex; align-items: center; gap: 8px; }
+  .platform .tag { font-size: 12px; font-weight: 600; color: #fff; background: var(--accent); padding: 2px 8px;
+    border-radius: 999px; display: none; }
+  .platform.mine .tag { display: inline-block; }
+  .platform p { color: var(--muted); margin: 0 0 14px; font-size: 15px; }
+  .platform a.dl { display: block; padding: 11px 14px; margin-bottom: 8px; border-radius: 10px; text-decoration: none;
+    color: var(--text); background: var(--bg2); border: 1px solid var(--line); font-weight: 600; font-size: 15px; }
+  .platform a.dl small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+  .platform a.dl:hover { border-color: var(--accent); }
+  .note { color: var(--muted); font-size: 14px; text-align: center; margin-top: 18px; }
+
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .feature { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .feature .icon { font-size: 26px; }
+  .feature h3 { margin: 6px 0 6px; font-size: 18px; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .gallery figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .gallery img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+  .gallery figcaption { padding: 10px 14px; color: var(--muted); font-size: 14px; }
+
+  .web { background: linear-gradient(135deg, #12204a, #0e1018); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 32px; text-align: center; }
+  .web h2 { margin-top: 0; }
+  .pill { display: inline-block; margin-bottom: 18px; padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    text-decoration: none; color: var(--text); background: rgba(79, 141, 255, .16); border: 1px solid rgba(79, 141, 255, .45); }
+  .pill b { color: var(--accent2); }
+  .pill:hover { background: rgba(79, 141, 255, .26); }
+  .feature.new { border-color: rgba(79, 141, 255, .45); background: linear-gradient(160deg, #16223f, var(--card) 60%); }
+  .more { text-align: center; margin-top: 22px; }
+  .btn.coffee { background: #ffdd00; border-color: #ffdd00; color: #1a1205; }
+  .btn.discord { background: #5865F2; border-color: #5865F2; color: #fff; }
+  header.top nav a.donate { color: #1a1205; background: #ffdd00; padding: 2px 12px; border-radius: 999px; font-weight: 700; }
+  header.top nav a.donate:hover { color: #1a1205; filter: brightness(1.08); }
+  header.top nav a.discord { color: #fff; background: #5865F2; padding: 2px 12px; border-radius: 999px; font-weight: 700; }
+  header.top nav a.discord:hover { color: #fff; filter: brightness(1.1); }
+  .support { background: linear-gradient(135deg, #2a2208, #0e1018 70%); border: 1px solid rgba(255, 221, 0, .35);
+    border-radius: var(--radius); padding: 32px; text-align: center; }
+  .support h2 { margin-top: 0; }
+  .tvbox { scroll-margin-top: 76px; margin-top: 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 26px; }
+  .tvbox h3 { margin: 0 0 4px; font-size: 21px; }
+  .tvbox ol { margin: 10px 0 0; padding-left: 22px; color: var(--muted); }
+  .tvbox li { margin: 6px 0; }
+  .tvbox b, .tvbox code { color: var(--text); }
+  .code { display: inline-block; font: 700 20px/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 1px; color: #fff;
+    background: var(--bg2); border: 1px solid var(--accent); border-radius: 8px; padding: 6px 10px; margin: 2px 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+  footer img { width: 40px; height: 40px; }
+  footer b { color: var(--text); }
+
+  dialog { padding: 0; border: none; background: transparent; max-width: 96vw; }
+  dialog::backdrop { background: rgba(0, 0, 0, .85); }
+  dialog img { max-width: 96vw; max-height: 90vh; border-radius: 10px; display: block; }
+
+  @media (max-width: 640px) {
+    header.top nav { display: none; }
+    .hero { padding-top: 40px; }
+    section { padding: 40px 0; }
+  }
+</style>
+<style>
+  .rel { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+  .rel article { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 26px; margin: 18px 0; }
+  .rel article > h2 { margin: 0 0 4px; }
+  .rel .date { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+  .rel h3, .rel h4 { margin: 18px 0 6px; }
+  .rel li { margin: 4px 0; line-height: 1.5; }
+  .rel p { line-height: 1.55; }
+  .rel code { background: var(--bg2); padding: 1px 6px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<main class="rel">
+  <p><a href="./">← Stream Goat</a></p>
+  <h1>Releases</h1>
+  <p style="color:var(--muted)">What's new and what's fixed in every version. Downloads are on the
+  <a href="https://github.com/sherazi5110/stream-goat/releases">GitHub releases</a> page.</p>
+  <div id="list">Loading…</div>
+</main>
+<script>
+  // Release notes come from docs/releases/<version>.md (copied here when the site is published).
+  const esc = t => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const inline = t => esc(t)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
+    .replace(/\*([^*]+)\*/g, "<i>$1</i>")
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/#(\d+)\b/g, '<a href="https://github.com/sherazi5110/stream-goat/issues/$1">#$1</a>');
+  function md(src) {
+    let out = "", list = false, para = [];
+    const flush = () => { if (para.length) { out += "<p>" + inline(para.join(" ")) + "</p>"; para = []; } };
+    const endList = () => { if (list) { out += "</ul>"; list = false; } };
+    for (const raw of src.split("\n")) {
+      const line = raw.trimEnd();
+      let m;
+      if (!line.trim()) { flush(); endList(); continue; }
+      if ((m = line.match(/^(#{1,4})\s+(.*)/))) { flush(); endList(); const n = Math.min(m[1].length + 1, 4); out += `<h${n}>${inline(m[2])}</h${n}>`; continue; }
+      if ((m = line.match(/^\s*[-*]\s+(.*)/))) { flush(); if (!list) { out += "<ul>"; list = true; } out += "<li>" + inline(m[1]) + "</li>"; continue; }
+      if (list && /^\s+/.test(line)) { out = out.replace(/<\/li>$/, " " + inline(line.trim()) + "</li>"); continue; }
+      endList(); para.push(line.trim());
+    }
+    flush(); endList();
+    return out;
+  }
+  const ver = v => v.split(".").map(Number);
+  const newer = (a, b) => { const x = ver(a), y = ver(b); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (y[i] || 0) - (x[i] || 0); return 0; };
+  fetch("releases/index.json").then(r => r.json()).then(async versions => {
+    versions.sort(newer);
+    const parts = await Promise.all(versions.map(v => fetch(`releases/${v}.md`).then(r => r.text()).catch(() => "")));
+    document.getElementById("list").innerHTML = versions.map((v, i) =>
+      `<article id="v${v}"><h2>Stream Goat ${v}</h2>${md(parts[i].replace(/^##\s+What's new in [\d.]+\s*\n/, ""))}</article>`).join("");
+  }).catch(() => { document.getElementById("list").textContent = "Couldn't load the release notes."; });
+</script>
+</body>
+</html>
