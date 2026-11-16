@@ -1,6 +1,6 @@
 # Stream Goat
 
-<p align="center"><img src="packaging/linux/cloudstream-linux.png" width="128" alt="Stream Goat logo: a goat chewing grass in front of a rainbow circle"></p>
+<p align="center"><img src="packaging/linux/cloudstream-linux.png" width="128" alt="Stream Goat logo: a white goat head on black"></p>
 
 <p align="center"><b>Movies, series, anime and Live TV on Windows, Linux, Android phones and Android TV.</b><br>
 Created by <b>Syed Ali Hamza</b></p>
