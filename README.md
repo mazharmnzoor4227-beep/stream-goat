@@ -7,7 +7,7 @@ Created by <b>Syed Ali Hamza</b></p>
 
 <p align="center"><a href="https://discord.gg/PUmEQzJSa"><img src="https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the Stream Goat Discord"></a></p>
 
-![Stream Goat's start animation: the goat chewing its grass under an arc of stars](docs/screenshots/intro.png)
+![Stream Goat start animation: the goat logo over glowing waves](docs/screenshots/intro.png)
 
 > **Testing notes (9.0.1).** The Mac and Linux apps are built and checked automatically but haven't been tested by hand yet, so please report anything odd. On Windows the first launch after installing can be slow and laggy for a minute while the app sets itself up and loads an earlier backup; give it a moment and it runs smoothly after that.
 
