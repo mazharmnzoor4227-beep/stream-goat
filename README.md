@@ -59,6 +59,14 @@ library and downloads carry over.)*
 | ![Profile editor](docs/screenshots/android-profile-editor.png) | ![Add-ons](docs/screenshots/android-addons.png) |
 | ![WeTrakr sync](docs/screenshots/android-wetrakr.png) | ![Library](docs/screenshots/android-library.png) |
 
+## Windows, Mac and Linux
+
+| | |
+|---|---|
+| ![Home](docs/screenshots/windows-home.png) | ![Download a whole season](docs/screenshots/windows-downloads.png) |
+| ![Appearance](docs/screenshots/windows-appearance.png) | ![Live TV sources](docs/screenshots/windows-livetv-sources.png) |
+| ![WeTrakr sync](docs/screenshots/windows-wetrakr.png) | |
+
 ## Download for your device
 
 Every file is on the **[latest release](https://github.com/sherazi5110/stream-goat/releases/latest)** page.
