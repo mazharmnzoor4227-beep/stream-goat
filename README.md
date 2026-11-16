@@ -2,16 +2,34 @@
 
 <p align="center"><img src="packaging/linux/cloudstream-linux.png" width="128" alt="Stream Goat logo: a white goat head on black"></p>
 
-<p align="center"><b>Movies, series, anime and Live TV on Windows, Linux, Android phones and Android TV.</b><br>
+<p align="center"><b>Movies, series, anime and Live TV on Android phones, tablets and TV, Windows, Mac, Linux and the web.</b><br>
 Created by <b>Syed Ali Hamza</b></p>
-
-<p align="center"><a href="https://discord.gg/PUmEQzJSa"><img src="https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the Stream Goat Discord"></a></p>
 
 ![Stream Goat start animation: the goat logo over glowing waves](docs/screenshots/intro.png)
 
 > **Testing notes (9.0.1).** The Mac and Linux apps are built and checked automatically but haven't been tested by hand yet, so please report anything odd. On Windows the first launch after installing can be slow and laggy for a minute while the app sets itself up and loads an earlier backup; give it a moment and it runs smoothly after that.
 
 > **Disclaimer.** Stream Goat is only a media player and organiser. It does not host, provide, link to or endorse any movies, shows, channels or other content, and it ships with no content sources. You add your own extensions, add-ons and playlists and are responsible for having the rights to whatever you play. Titles, posters and logos belong to their owners; in the screenshots below they are blurred.
+
+Stream Goat runs **CloudStream extensions and Stremio add-ons**, from the same repositories the official CloudStream
+Android app uses, with no changes to the extensions. *(Formerly "CloudStream for Linux"; your extensions, profiles,
+library and downloads carry over.)*
+
+> [!NOTE]
+> **This is a personal project, and it isn't perfect.** I add features and fix things over time, so some parts may
+> not work as expected yet. If something breaks or you have an idea, please
+> **[report it / create an issue](https://github.com/sherazi5110/stream-goat/issues/new)**. In the app you can also use
+> *Report a glitch* (Settings → About, shake your phone, or F12 on a computer), which fills in your version, device and a screenshot for you.
+
+<p align="center">
+<a href="https://sherazi5110.github.io/stream-goat/"><img src="https://img.shields.io/badge/Website-e11d48?style=for-the-badge" alt="Website"></a>
+<a href="https://github.com/sherazi5110/stream-goat/releases/latest"><img src="https://img.shields.io/badge/Download-16a34a?style=for-the-badge&logo=github&logoColor=white" alt="Download"></a>
+<a href="https://sherazi5110.github.io/stream-goat/app/"><img src="https://img.shields.io/badge/Open%20the%20web%20version-2563eb?style=for-the-badge" alt="Open the web version"></a>
+<a href="INSTALL.md"><img src="https://img.shields.io/badge/Full%20install%20guide-7c3aed?style=for-the-badge" alt="Full install guide"></a>
+<a href="https://discord.gg/PUmEQzJSa"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
+<a href="https://github.com/sherazi5110/stream-goat/releases/tag/test-build"><img src="https://img.shields.io/badge/Test%20pre--release-f59e0b?style=for-the-badge" alt="Test pre-release"></a>
+</p>
+
 
 ## What it does
 
@@ -40,18 +58,6 @@ Created by <b>Syed Ali Hamza</b></p>
 | ![Live TV](docs/screenshots/android-livetv.png) | ![Appearance](docs/screenshots/android-appearance.png) |
 | ![Profile editor](docs/screenshots/android-profile-editor.png) | ![Add-ons](docs/screenshots/android-addons.png) |
 | ![WeTrakr sync](docs/screenshots/android-wetrakr.png) | ![Library](docs/screenshots/android-library.png) |
-
-Stream Goat runs **CloudStream extensions and Stremio add-ons**, from the same repositories the official CloudStream
-Android app uses, with no changes to the extensions. *(Formerly "CloudStream for Linux"; your extensions, profiles,
-library and downloads carry over.)*
-
-> [!NOTE]
-> **This is a personal project, and it isn't perfect.** I add features and fix things over time, so some parts may
-> not work as expected yet. If something breaks or you have an idea, please
-> **[report it / create an issue](https://github.com/sherazi5110/stream-goat/issues/new)**. In the app you can also use
-> *Settings → About → Report a problem*, which fills in your version and device for you.
-
-**[Website](https://sherazi5110.github.io/stream-goat/)** · **[Download](https://github.com/sherazi5110/stream-goat/releases/latest)** · **[Open the web version](https://sherazi5110.github.io/stream-goat/app/)** (any phone or browser, Stremio add-ons) · **[Full install guide](INSTALL.md)** · **[Discord](https://discord.gg/PUmEQzJSa)** · **[Test Pre-released version](https://github.com/sherazi5110/stream-goat/releases/tag/test-build)**
 
 ## Download for your device
 
