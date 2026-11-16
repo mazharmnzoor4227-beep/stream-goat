@@ -9,6 +9,17 @@ Created by <b>Syed Ali Hamza</b></p>
 
 ![Stream Goat's start animation: the goat chewing its grass under an arc of stars](docs/screenshots/intro.png)
 
+> **Disclaimer.** Stream Goat is only a media player and organiser. It does not host, provide, link to or endorse any movies, shows, channels or other content, and it ships with no content sources. You add your own extensions, add-ons and playlists and are responsible for having the rights to whatever you play. Titles, posters and logos belong to their owners; in the screenshots below they are blurred.
+
+## Android (phone, tablet, TV)
+
+| | |
+|---|---|
+| ![Start animation](docs/screenshots/android-intro.png) | ![Home](docs/screenshots/android-home.png) |
+| ![Live TV](docs/screenshots/android-livetv.png) | ![Appearance](docs/screenshots/android-appearance.png) |
+| ![Profile editor](docs/screenshots/android-profile-editor.png) | ![Add-ons](docs/screenshots/android-addons.png) |
+| ![WeTrakr sync](docs/screenshots/android-wetrakr.png) | ![Library](docs/screenshots/android-library.png) |
+
 Stream Goat runs **CloudStream extensions and Stremio add-ons**, from the same repositories the official CloudStream
 Android app uses, with no changes to the extensions. *(Formerly "CloudStream for Linux"; your extensions, profiles,
 library and downloads carry over.)*
