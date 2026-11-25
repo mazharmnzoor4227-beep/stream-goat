@@ -48,8 +48,14 @@ object StremioAddons {
     /** Streaming Catalogs: what's trending on Netflix, HBO Max, Disney+, Prime Video and Apple TV+ (catalogs only). */
     const val STREAMING_CATALOGS = "https://7a82163c306e-stremio-netflix-catalog-addon.baby-beamup.club/manifest.json"
 
+    /** Public Domain Movies: official Stremio add-on with playable public-domain films. */
+    const val PUBLIC_DOMAIN = "https://caching.stremio.net/publicdomainmovies.now.sh/manifest.json"
+
+    /** WatchHub: official Stremio add-on showing legal availability. */
+    const val WATCHHUB = "https://watchhub.strem.io/manifest.json"
+
     /** Installed for everyone, in this order (Home starts on the first). Each only once: a removed one stays removed. */
-    @Volatile var preinstalled = listOf(STREAMING_CATALOGS, CINEMETA)
+    @Volatile var preinstalled = listOf(STREAMING_CATALOGS, CINEMETA, PUBLIC_DOMAIN, WATCHHUB)
 
     data class Addon(val url: String, val manifest: Manifest, val enabled: Boolean) {
         val base get() = url.removeSuffix("/manifest.json")

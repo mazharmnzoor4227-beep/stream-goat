@@ -22,7 +22,7 @@
         android:allowBackup="true"
         android:banner="@drawable/tv_banner"
         android:icon="@mipmap/ic_launcher"
-        android:label="Stream Goat"
+        android:label="StreamHub"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"

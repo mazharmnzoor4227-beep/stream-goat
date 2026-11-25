@@ -67,8 +67,8 @@ object Brand {
 @Composable
 fun GoatMark(modifier: Modifier, tint: Color = Palette.accent, rainbow: Boolean = ThemeState.logoRainbow) {
     val mark = Brand.mark ?: return
-    if (!rainbow) Image(mark, "Stream Goat", modifier, colorFilter = ColorFilter.tint(tint))
-    else Image(mark, "Stream Goat", modifier.graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }.drawWithContent {
+    if (!rainbow) Image(mark, "StreamHub", modifier, colorFilter = ColorFilter.tint(tint))
+    else Image(mark, "StreamHub", modifier.graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }.drawWithContent {
         drawContent()
         drawRect(Brush.linearGradient(Brand.rainbow, Offset.Zero, Offset(size.width, size.height)), blendMode = BlendMode.SrcIn)
     })

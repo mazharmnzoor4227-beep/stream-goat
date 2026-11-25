@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         // Installs next to the official app (com.lagradost.cloudstream3).
-        applicationId = "io.github.sherazi5110.cloudstream"
+        applicationId = "com.mazharansari.streamhub"
         minSdk = 23
         targetSdk = 36
         // CI passes the release tag (-PappVersion=7.0.0); local builds use the numbers below.
