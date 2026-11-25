@@ -66,7 +66,7 @@ object Music {
     }
 
     /** Audius trending songs from its public API; each plays straight from its stream address. */
-    private fun loadAudius(): List<Track> {
+    private suspend fun loadAudius(): List<Track> {
         val text = com.lagradost.cloudstream3.app.get("https://discoveryprovider.audius.co/v1/tracks/trending?app_name=StreamHub&limit=20", timeout = 15).text
         val data = org.json.JSONObject(text).optJSONArray("data") ?: return emptyList()
         return (0 until data.length()).mapNotNull { i ->
