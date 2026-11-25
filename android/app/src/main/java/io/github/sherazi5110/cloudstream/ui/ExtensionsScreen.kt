@@ -143,6 +143,48 @@ fun ExtensionsScreen() {
                     }
                 }
             }
+            // Every extension of the official repository, right here: no address to type, just tap Install.
+            item { SectionTitle("All extensions", Modifier.padding(top = 24.dp, bottom = 4.dp)) }
+            item {
+                var official by remember { mutableStateOf<List<PluginWrapper>?>(null) }
+                var officialFailed by remember { mutableStateOf(false) }
+                val working = remember { mutableStateMapOf<String, Boolean>() }
+                LaunchedEffect(repos) {
+                    val data = repos.firstOrNull { it.url == RepositoryManager.OFFICIAL_REPO_URL }
+                    if (data == null) { officialFailed = true; return@LaunchedEffect }
+                    val list = withContext(Dispatchers.IO) { RepositoryManager.getRepoPlugins(data) }
+                    if (list == null) officialFailed = true else official = list.sortedBy { it.plugin.name.lowercase() }
+                }
+                when {
+                    officialFailed -> Text("Official extensions couldn't be loaded. Check your connection and reopen this page.", style = MaterialTheme.typography.bodyMedium, color = Palette.muted)
+                    official == null -> Spinner(Modifier.fillMaxWidth().height(80.dp))
+                    else -> Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        official.orEmpty().forEach { w ->
+                            val p = w.plugin
+                            val have = installed.firstOrNull { it.internalName == p.internalName }
+                            val detail = listOfNotNull(statusText[p.status], p.language?.uppercase(), p.tvTypes?.take(3)?.joinToString(", "), "v${p.version}", p.description).joinToString(" · ")
+                            ListRow(p.name, detail, p.iconUrl?.replace("%size%", "64")) {
+                                when {
+                                    working[p.internalName] == true -> Spinner(Modifier.size(40.dp))
+                                    have == null -> IconAction(Icons.Filled.Download, "Install") {
+                                        working[p.internalName] = true
+                                        scope.launch {
+                                            val r = withContext(Dispatchers.IO) { PluginManager.install(w) }
+                                            working.remove(p.internalName)
+                                            r.onFailure { App.toast("${p.name}: ${it.message}") }
+                                        }
+                                    }
+                                    p.version > have.version -> IconAction(Icons.Filled.Refresh, "Update", Palette.accent) {
+                                        working[p.internalName] = true
+                                        scope.launch { withContext(Dispatchers.IO) { PluginManager.install(w) }; working.remove(p.internalName) }
+                                    }
+                                    else -> IconAction(Icons.Filled.Delete, "Uninstall") { PluginManager.uninstall(p.internalName); PluginManager.bumpVersion() }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             item { SectionTitle("Installed · ${installed.size}", Modifier.padding(top = 24.dp, bottom = 4.dp)) }
             if (installed.size > 6) item { ExtensionSearch(query) { query = it } }
             uniqueItems(shownInstalled, key = { "plugin|${it.internalName}" }) { data ->

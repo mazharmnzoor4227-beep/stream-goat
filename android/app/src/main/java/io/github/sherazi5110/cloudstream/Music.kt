@@ -22,7 +22,7 @@ import org.videolan.libvlc.MediaPlayer
  * the built-in VLC (no video, no ads, little data), a queue made of the search results, and a history.
  */
 object Music {
-    data class Track(val url: String, val title: String, val artist: String, val thumbnail: String?, val seconds: Long)
+    data class Track(val url: String, val title: String, val artist: String, val thumbnail: String?, val seconds: Long, val streamUrl: String? = null)
 
     var current by mutableStateOf<Track?>(null)
         private set
@@ -52,18 +52,40 @@ object Music {
     private fun StreamInfoItem.track() = Track(url, name, uploaderName.orEmpty().removeSuffix(" - Topic"),
         thumbnails.maxByOrNull { it.width }?.url, duration)
 
-    /** Trending music on YouTube (its "Music" chart; the general trending list when there isn't one). */
+    /** Trending music: Audius (a free public music API) first, then YouTube's music chart. */
     suspend fun loadPopular(): List<Track> = withContext(Dispatchers.IO) {
+        val audius = runCatching { loadAudius() }.getOrDefault(emptyList())
         val yt = ServiceList.YouTube
         val kiosks = yt.kioskList
         val id = kiosks.availableKiosks.firstOrNull { it.contains("music", true) } ?: kiosks.defaultKioskId
         val url = kiosks.getListLinkHandlerFactoryByType(id).fromId(id).url
-        org.schabi.newpipe.extractor.kiosk.KioskInfo.getInfo(yt, url).relatedItems.filterIsInstance<StreamInfoItem>()
-            .map { it.track() }.also { popular = it }
+        val youtube = runCatching {
+            org.schabi.newpipe.extractor.kiosk.KioskInfo.getInfo(yt, url).relatedItems.filterIsInstance<StreamInfoItem>().map { it.track() }
+        }.getOrDefault(emptyList())
+        (audius + youtube).also { popular = it }
+    }
+
+    /** Audius trending songs from its public API; each plays straight from its stream address. */
+    private fun loadAudius(): List<Track> {
+        val text = com.lagradost.cloudstream3.app.get("https://discoveryprovider.audius.co/v1/tracks/trending?app_name=StreamHub&limit=20", timeout = 15).text
+        val data = org.json.JSONObject(text).optJSONArray("data") ?: return emptyList()
+        return (0 until data.length()).mapNotNull { i ->
+            val o = data.optJSONObject(i) ?: return@mapNotNull null
+            val id = o.optString("id").ifBlank { return@mapNotNull null }
+            Track(
+                url = "audius:$id",
+                title = o.optString("title"),
+                artist = o.optJSONObject("user")?.optString("name").orEmpty(),
+                thumbnail = o.optJSONObject("artwork")?.optString("480x480")?.ifBlank { null },
+                seconds = o.optLong("duration"),
+                streamUrl = "https://discoveryprovider.audius.co/v1/tracks/$id/stream?app_name=StreamHub",
+            )
+        }
     }
 
     /** Suggestions from [track] (the last played song when the tab opens). */
     suspend fun loadSuggestions(track: Track) = withContext(Dispatchers.IO) {
+        if (track.streamUrl != null) return@withContext
         if (suggestionsFor == track.url && suggestions.isNotEmpty()) return@withContext
         val info = StreamInfo.getInfo(ServiceList.YouTube, track.url)
         setSuggestions(track.url, info)
@@ -150,6 +172,15 @@ object Music {
             App.scope.launch { runCatching { withContext(Dispatchers.IO) { StreamInfo.getInfo(ServiceList.YouTube, track.url) }.let { setSuggestions(track.url, it) } } }
             return
         }
+        // A song with a direct stream address (Audius) plays straight away.
+        track.streamUrl?.let { stream ->
+            runCatching {
+                player.stop()
+                val m = Media(Vlc.lib, Uri.parse(stream)).apply { addOption(":no-video") }
+                player.media = m; m.release(); player.play()
+            }.onFailure { loading = false; error = "Couldn't play \"${track.title}\"" }
+            return
+        }
         App.scope.launch {
             val result = runCatching { audioUrl(track.url) }
             if (current != track) return@launch
@@ -196,7 +227,7 @@ object Music {
         play(track)
         App.scope.launch {
             runCatching { loadSuggestions(track) }
-            if (current?.url == track.url) queue = listOf(track) + suggestions.filter { it.url != track.url }
+            if (current?.url == track.url && suggestionsFor == track.url) queue = listOf(track) + suggestions.filter { it.url != track.url }
         }
     }
 

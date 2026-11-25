@@ -40,8 +40,27 @@ import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
+import kotlin.math.roundToInt
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
@@ -218,15 +237,64 @@ private fun BottomBar() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            Row(
-                Modifier.weight(1f, fill = false).horizontalScroll(rememberScrollState()),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
-            ) {
-                tabs.forEach { tab -> PillItem(tab, tab.icon(), vertical = false, compact = compact) }
-            }
+            DragTabs(tabs, compact)
             Box(Modifier.padding(horizontal = if (compact) 3.dp else 6.dp).width(1.dp).height(22.dp).background(Color.White.copy(alpha = 0.18f)))
             PillItem(Tab.MORE, Icons.Filled.Settings, vertical = false, compact = compact)
+        }
+    }
+}
+
+/**
+ * The bottom bar's tabs with an iPhone-style highlight: it slides smoothly to the tapped tab, and dragging
+ * it sideways moves it under the finger and selects the tab it lands on.
+ */
+@Composable
+private fun DragTabs(tabs: List<Tab>, compact: Boolean) {
+    val positions = remember { mutableStateMapOf<Tab, Pair<Float, Float>>() }
+    val selected = if (Nav.tab in tabs) Nav.tab else tabs.first()
+    var dragging by remember { mutableStateOf(false) }
+    var dragBase by remember { mutableFloatStateOf(0f) }
+    var dragOffset by remember { mutableFloatStateOf(0f) }
+    val animX = remember { Animatable(0f) }
+    val target = positions[selected]
+    LaunchedEffect(target, dragging) {
+        if (!dragging && target != null) animX.animateTo(target.first, spring(stiffness = Spring.StiffnessMediumLow, dampingRatio = 0.85f))
+    }
+    LaunchedEffect(dragging, dragOffset) {
+        if (dragging) {
+            val minX = positions.values.minOfOrNull { it.first } ?: 0f
+            val maxX = positions.values.maxOfOrNull { it.first } ?: 0f
+            animX.snapTo((dragBase + dragOffset).coerceIn(minX, maxX))
+        }
+    }
+    val animW by animateFloatAsState(target?.second ?: 0f, spring(stiffness = Spring.StiffnessMediumLow, dampingRatio = 0.85f), label = "pillW")
+    val density = LocalDensity.current
+    Box(
+        Modifier.pointerInput(tabs) {
+            detectHorizontalDragGestures(
+                onDragStart = { dragging = true; dragBase = animX.value; dragOffset = 0f },
+                onDragEnd = {
+                    dragging = false
+                    val center = animX.value + animW / 2f
+                    positions.minByOrNull { (_, p) -> kotlin.math.abs(center - (p.first + p.second / 2f)) }?.key?.let { Nav.select(it) }
+                },
+                onDragCancel = { dragging = false },
+            ) { change, dragAmount -> dragOffset += dragAmount; change.consume() }
+        }
+    ) {
+        if (target != null) {
+            Box(
+                Modifier.offset { IntOffset(animX.value.roundToInt(), 0) }
+                    .width(with(density) { animW.toDp() }).height(44.dp)
+                    .background(chosenColor, RoundedCornerShape(50))
+                    .border(1.dp, Color.White.copy(alpha = 0.12f), RoundedCornerShape(50))
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            tabs.forEach { tab ->
+                PillItem(tab, tab.icon(), vertical = false, compact = compact, pill = false,
+                    modifier = Modifier.onGloballyPositioned { positions[tab] = it.positionInParent().x to it.size.width.toFloat() })
+            }
         }
     }
 }
@@ -268,14 +336,14 @@ private fun Rail() {
 
 /** One tab in a pill bar: chosen = a lighter inner pill (with its name in the bottom bar). */
 @Composable
-private fun PillItem(tab: Tab, icon: ImageVector, vertical: Boolean, size: androidx.compose.ui.unit.Dp = 48.dp, compact: Boolean = false) {
+private fun PillItem(tab: Tab, icon: ImageVector, vertical: Boolean, size: androidx.compose.ui.unit.Dp = 48.dp, compact: Boolean = false, pill: Boolean = true, modifier: Modifier = Modifier) {
     val selected = (Nav.tab == tab || (tab == Tab.MORE && Nav.tab == Tab.EXTENSIONS && !vertical)) && (Nav.stack.isEmpty() || !vertical)
     val shape = RoundedCornerShape(50)
     val tint = if (selected) Color.White else Palette.muted
     Row(
-        Modifier.card(shape, focusScale = 1.1f) { Nav.select(tab) }
-            .background(if (selected) chosenColor else Color.Transparent, shape)
-            .then(if (selected && !vertical) Modifier.border(1.dp, Color.White.copy(alpha = 0.12f), shape) else Modifier)
+        modifier.card(shape, focusScale = 1.1f) { Nav.select(tab) }
+            .background(if (selected && pill) chosenColor else Color.Transparent, shape)
+            .then(if (selected && !vertical && pill) Modifier.border(1.dp, Color.White.copy(alpha = 0.12f), shape) else Modifier)
             .animateContentSize()
             .then(if (vertical) Modifier.size(size) else Modifier.height(44.dp).padding(horizontal = if (compact) 10.dp else if (selected) 16.dp else 13.dp)),
         verticalAlignment = Alignment.CenterVertically,

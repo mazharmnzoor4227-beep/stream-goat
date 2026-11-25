@@ -129,6 +129,19 @@ object RepositoryManager {
     fun getRepositories(): List<RepositoryData> =
         prefs.getString(REPOSITORIES_KEY, null)?.let { mapper.readValue<List<RepositoryData>>(it) } ?: emptyList()
 
+    /** The official CloudStream extensions repository, the one the official app itself ships. */
+    const val OFFICIAL_REPO_URL = "https://raw.githubusercontent.com/recloudstream/extensions/master/repo.json"
+
+    /**
+     * Adds the official repository once, so the Extensions page lists its extensions with Install buttons
+     * right away instead of asking for an address first. Removing it later keeps it removed.
+     */
+    fun seedOfficialRepository() {
+        if (prefs.getBoolean("OFFICIAL_REPO_SEEDED", false)) return
+        addRepositoryData(RepositoryData(null, "CloudStream Official", OFFICIAL_REPO_URL, "Official CloudStream extensions"))
+        prefs.edit().putBoolean("OFFICIAL_REPO_SEEDED", true).apply()
+    }
+
     private fun saveRepositories(list: List<RepositoryData>) =
         prefs.edit().putString(REPOSITORIES_KEY, mapper.writeValueAsString(list)).apply()
 
